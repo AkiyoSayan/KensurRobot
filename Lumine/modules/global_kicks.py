@@ -6,12 +6,12 @@ from telegram.error import BadRequest, TelegramError
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, CallbackContext, OWNER_ID, SUDO_USERS, SUPPORT_USERS
-from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_admin
-from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.helper_funcs.misc import send_to_list
-from tg_bot.modules.sql.users_sql import get_all_chats
+from Lumine import dispatcher, CallbackContext, OWNER_ID, SUDO_USERS, SUPPORT_USERS
+from Lumine.modules.helper_funcs.chat_status import user_admin, is_user_admin
+from Lumine.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from Lumine.modules.helper_funcs.filters import CustomFilters
+from Lumine.modules.helper_funcs.misc import send_to_list
+from Lumine.modules.sql.users_sql import get_all_chats
 
 GKICK_ERRORS = {
     "User is an administrator of the chat",
