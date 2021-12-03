@@ -74,9 +74,8 @@ def get_readable_time(seconds: int) -> str:
 
 PM_START_TEXT = """
 Hi {}, my name is {}! 
-I am a Genshin Impact themed group management bot.
-
-You can find my list of available commands with /help.
+I am an Anime themed group management bot.
+Built by weebs for weebs, I specialize in managing anime centric communities!
 """
 
 HELP_STRINGS = """
@@ -212,8 +211,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
-                Lumine_IMG,
+            update.effective_message.reply(
                 PM_START_TEXT.format(
                     escape_markdown(first_name), escape_markdown(context.bot.first_name)
                 ),
@@ -229,16 +227,18 @@ def start(update: Update, context: CallbackContext):
                                 text="Updates",
                                 url="t.me/OnePunchUpdates"
                             ),
+                        ],
+                        [
                             InlineKeyboardButton(
                                 text="Support",
                                 url="t.me/KensurCommunity"
                             ),
-                        ],
-                        [
                             InlineKeyboardButton(
                                 text="Help",
                                 callback_data="help_back",
                             ),
+                        ],
+                        [
                             InlineKeyboardButton(
                                 text="Try Inline",
                                 switch_inline_query_current_chat="",
