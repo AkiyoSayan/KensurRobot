@@ -245,7 +245,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                              InlineKeyboardButton(
                                 text="Change Log",
-                                url="t.me/kek"                       
+                                url="t.me/kek",                     
                             )
                         ],
                     ]
