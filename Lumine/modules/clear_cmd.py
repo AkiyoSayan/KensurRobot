@@ -104,7 +104,8 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-__help__ = """
+#__help__ =
+ """
 *Get module configuration:*
 • `/clearcmd`: provides all commands that has been set in current group with their deletion time
 • `/clearcmd list`: list all available commands for this module
@@ -122,6 +123,6 @@ CLEARCMD_HANDLER = CommandHandler("clearcmd", clearcmd, run_async=True)
 
 dispatcher.add_handler(CLEARCMD_HANDLER)
 
-__mod_name__ = "Clear Commands"
+#__mod_name__ = "Clear Commands"
 __command_list__ = ["clearcmd"]
 __handlers__ = [CLEARCMD_HANDLER]
