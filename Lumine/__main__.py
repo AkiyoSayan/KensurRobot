@@ -222,34 +222,30 @@ def start(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="Add Lumine to your group",
-                                url="t.me/{}?startgroup=true".format(
-                                    context.bot.username
-                                ),
-                            )
-                        ],
-                        [
+                                text="Add Me",
+                                url="t.me/{}?startgroup=true",
+                            ),
                             InlineKeyboardButton(
-                                text="Support Group",
-                                url=f"https://t.me/LumineBotSupport",
+                                text="Updates",
+                                url="t.me/OnePunchUpdates"
+                            ),
+                            InlineKeyboardButton(
+                                text="Support",
+                                url="t.me/KensurCommunity"
                             ),
                         ],
                         [
                             InlineKeyboardButton(
-                                text="Getting started guide",
-                                url="https://t.me/OnePunchUpdates/29",
-                            )
-                        ],
-                        [
+                                text="Help",
+                                callback_data="help_back",
+                            ),
                             InlineKeyboardButton(
-                                text="Source code",
-                                url="https://github.com/LightLegendXR/Lumine",
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Recommended federation",
-                                url="https://t.me/LLXRFed/3",
+                                text="Try Inline",
+                                switch_inline_query_current_chat="",
+                            ),
+                             InlineKeyboardButton(
+                                text="Change Log",
+                                url="t.me/kek"                       
                             )
                         ],
                     ]
