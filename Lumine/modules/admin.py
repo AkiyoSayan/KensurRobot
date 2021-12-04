@@ -645,21 +645,42 @@ def adminlist(update: Update, context: CallbackContext):
 __help__ = """
  • `/admins`*:* list of admins in the chat
 
-*Admins only:*
+*Admin Commands:*
+*✥ Pin:*
  • `/pin`*:* silently pins the message replied to - add `'loud'` or `'notify'` to give notifs to users
  • `/unpin`*:* unpins the currently pinned message
+
+*✥ Invitelinks:*
  • `/invitelink`*:* gets invitelink
  • `/link`*:* same as invitelink
- • `/promote`*:* promotes the user replied to
- • `/demote`*:* demotes the user replied to
- • `/title <title here>`*:* sets a custom title for an admin that the bot promoted
- • `/admincache`*:* force refresh the admins list
+
+*✥ Others*
  • `/setgtitle` `<newtitle>`*:* Sets new chat title in your group.
  • `/setgpic`*:* As a reply to file or photo to set group profile pic!
  • `/delgpic`*:* Same as above but to remove group profile pic.
  • `/setsticker`*:* As a reply to some sticker to set it as group sticker set!
  • `/setdescription` `<description>`*:* Sets new chat description in group.
  • `/zombies`*:* scan and clean zombies
+
+*✥ Promote/Demote*
+ • `/promote`*:* promotes the user replied to
+ • `/demote`*:* demotes the user replied to
+ • `/title <title here>`*:* sets a custom title for an admin that the bot promoted
+ • `/admincache`*:* force refresh the admins list
+
+*Moderation:*
+*✥ Banning and Kicks:*
+ • `/ban <userhandle>`: bans a user (via handle, or reply)
+ • `/sban <userhandle>`: Silently ban a user then deletes command + replied to message and doesn't reply (via handle, or reply)
+ • `/dban <messagereplied>`: Silently bans the user and deletes the target replied to message
+ • `/tban <userhandle> x(m/h/d)`: bans a user for x time, (via handle, or reply) m = minutes, h = hours, d = days
+ • `/unban <userhandle>`: unbans a user (via handle, or reply)
+ • `/punch or kick <userhandle>`: Punches a user out of the group (via handle, or reply)
+
+*✥ Muting:*
+ • `/mute <userhandle>`: silences a user, Can also be used as a reply, muting the replied to user
+ • `/tmute <userhandle> x(m/h/d)`: mutes a user for x time (via handle, or reply). m = minutes, h = hours, d = days
+ • `/unmute <userhandle>`: unmutes a user, Can also be used as a reply, muting the replied to user
 """
 
 ADMINLIST_HANDLER = DisableAbleCommandHandler("admins", adminlist, run_async=True)
