@@ -147,11 +147,19 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
             and not message.parse_entities([MessageEntity.TEXT_MENTION])
         )
     ):
-        message.reply_text("I can't extract a user from this.")
+        delmsg = message.reply_text("I can't extract a user from this.")
+
+        cleartime = get_clearcmd(chat.id, "info")
+        
+        if cleartime:
+            context.dispatcher.run_async(delete, delmsg, cleartime.time)
+
         return
 
     else:
         return
+
+    rep = message.reply_text("<code>Appraising...</code>", parse_mode=ParseMode.HTML)
 
     text = (
         f"<b>General:</b>\n"
@@ -215,40 +223,45 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
 
     text += "\n"
     for mod in USER_INFO:
-        if mod.__mod_name__ == "Users":
-            continue
-
         try:
-            mod_info = mod.__user_info__(user.id)
+            mod_info = mod.__user_info__(user.id).strip()
         except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id)
+            mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n" + mod_info
 
     if INFOPIC:
         try:
-            profile = bot.get_user_profile_photos(user.id).photos[0][-1]
+            profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
             _file = bot.get_file(profile["file_id"])
+            _file.download(f"{user.id}.png")
 
-            _file = _file.download(out=BytesIO())
-            _file.seek(0)
-
-            message.reply_document(
-                document=_file,
+            delmsg = message.reply_document(
+                document=open(f"{user.id}.png", "rb"),
                 caption=(text),
                 parse_mode=ParseMode.HTML,
             )
 
+            os.remove(f"{user.id}.png")
         # Incase user don't have profile pic, send normal text
         except IndexError:
-            message.reply_text(
+            delmsg = message.reply_text(
                 text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
             )
 
     else:
-        message.reply_text(
+        delmsg = message.reply_text(
             text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
         )
+
+    rep.delete()
+
+
+    cleartime = get_clearcmd(chat.id, "info")
+    
+    if cleartime:
+        context.dispatcher.run_async(delete, delmsg, cleartime.time)
+
 
 def about_me(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
