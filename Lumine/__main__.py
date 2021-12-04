@@ -291,6 +291,7 @@ def error_callback(update: Update, context: CallbackContext):
 
 def StartBack(update: Update, context: CallbackContext):
     query = update.callback_query
+    first_name = update.effective_user.first_name
     try:
         if query.data == 'start_back':
             query.message.edit_text(
