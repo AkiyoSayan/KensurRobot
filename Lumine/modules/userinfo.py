@@ -125,8 +125,9 @@ def gifid(update: Update, context: CallbackContext):
         update.effective_message.reply_text("Please reply to a gif to get its ID.")
 
 
-def info(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def info(update: Update, context: CallbackContext):  # sourcery no-metrics
+    bot = context.bot
+    args = context.args
     message = update.effective_message
     chat = update.effective_chat
     user_id = extract_user(update.effective_message, args)
@@ -146,22 +147,14 @@ def info(update: Update, context: CallbackContext):
             and not message.parse_entities([MessageEntity.TEXT_MENTION])
         )
     ):
-        delmsg = message.reply_text("I can't extract a user from this.")
-
-        cleartime = get_clearcmd(chat.id, "info")
-        
-        if cleartime:
-            context.dispatcher.run_async(delete, delmsg, cleartime.time)
-
+        message.reply_text("I can't extract a user from this.")
         return
 
     else:
         return
 
-    rep = message.reply_text("<code>Appraising...</code>", parse_mode=ParseMode.HTML)
-
     text = (
-        f"<b>General>:</b>\n"
+        f"<b>General:</b>\n"
         f"ID: <code>{user.id}</code>\n"
         f"First Name: {html.escape(user.first_name)}"
     )
@@ -172,112 +165,90 @@ def info(update: Update, context: CallbackContext):
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
 
-    text += f"\nPermalink: {mention_html(user.id, 'link')}"
-
-    if chat.type != "private" and user_id != bot.id:
-        _stext = "\nPresence: <code>{}</code>"
-
-        afk_st = is_afk(user.id)
-        if afk_st:
-            text += _stext.format("AFK")
-        else:
-            status = status = bot.get_chat_member(chat.id, user.id).status
-            if status:
-                if status == "left":
-                    text += _stext.format("Not here")
-                if status == "kicked":
-                    text += _stext.format("Banned")
-                elif status == "member":
-                    text += _stext.format("Detected")
-                elif status in {"administrator", "creator"}:
-                    text += _stext.format("Admin")
+    text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
         if spamwtc:
-            text += "\n\n<b>This person is Spamwatched!</b>"
+            text += "<b>\n\nSpamWatch:\n</b>"
+            text += "<b>This person is banned in Spamwatch!</b>"
             text += f"\nReason: <pre>{spamwtc.reason}</pre>"
             text += "\nAppeal at @SpamWatchSupport"
         else:
-            pass
+            text += "<b>\n\nSpamWatch:</b>\n Not banned"
     except:
         pass  # don't crash if api is down somehow...
 
     disaster_level_present = False
 
-    if user.id == OWNER_ID:
-        text += "\n\nThis person is my <b>Owner</b>"
-        disaster_level_present = True
-    elif user.id in DEV_USERS:
-        text += "\n\nThis person is my <b>Developer</b>"
-        disaster_level_present = True
-    elif user.id in SUDO_USERS:
-        text += "\n\nThis person have power of <b>Sudo</b>"
-        disaster_level_present = True
-    elif user.id in SUPPORT_USERS:
-        text += "\n\nThis person is my <b>Support User</b>"
-        disaster_level_present = True
-    elif user.id in WHITELIST_USERS:
-        text += "\n\nThis person is <b>Whitelist User</b>"
-        disaster_level_present = True
-
-    # if disaster_level_present:
-    #     text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
-    #         bot.username)
+    num_chats = sql.get_user_num_chats(user.id)
+    text += f"\n<b>Chat count</b>: <code>{num_chats}</code>"
 
     try:
         user_member = chat.get_member(user.id)
         if user_member.status == "administrator":
-            result = requests.post(
-                f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}"
-            )
-            result = result.json()["result"]
-            if "custom_title" in result.keys():
-                custom_title = result["custom_title"]
-                text += f"\n\nTitle:\n<b>{custom_title}</b>"
+            result = bot.get_chat_member(chat.id, user.id)
+            if result.custom_title:
+                text += f"\nThis user holds the title <b>{result.custom_title}</b> here."
     except BadRequest:
         pass
 
+
+    if user.id == OWNER_ID:
+        text += '\nThis person is my owner'
+        disaster_level_present = True
+    elif user.id in DEV_USERS:
+        text += '\nThis Person is a part of Eagle Union'
+        disaster_level_present = True
+    elif user.id in SUDO_USERS:
+        text += '\nThe Nation level of this person is Royal'
+        disaster_level_present = True
+    elif user.id in SUPPORT_USERS:
+        text += '\nThe Nation level of this person is Sakura'
+        disaster_level_present = True
+    elif user.id in WHITELIST_USERS:
+        text += '\nThe Nation level of this person is Neptunia'
+        disaster_level_present = True
+
+    if disaster_level_present:
+        text += ' [<a href="https://t.me/{}?start=nations">?</a>]'.format(bot.username)
+
+    text += "\n"
     for mod in USER_INFO:
+        if mod.__mod_name__ == "Users":
+            continue
+
         try:
-            mod_info = mod.__user_info__(user.id).strip()
+            mod_info = mod.__user_info__(user.id)
         except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id).strip()
+            mod_info = mod.__user_info__(user.id, chat.id)
         if mod_info:
-            text += "\n\n" + mod_info
+            text += "\n" + mod_info
 
     if INFOPIC:
         try:
-            profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
+            profile = bot.get_user_profile_photos(user.id).photos[0][-1]
             _file = bot.get_file(profile["file_id"])
-            _file.download(f"{user.id}.png")
 
-            delmsg = message.reply_document(
-                document=open(f"{user.id}.png", "rb"),
+            _file = _file.download(out=BytesIO())
+            _file.seek(0)
+
+            message.reply_document(
+                document=_file,
                 caption=(text),
                 parse_mode=ParseMode.HTML,
             )
 
-            os.remove(f"{user.id}.png")
         # Incase user don't have profile pic, send normal text
         except IndexError:
-            delmsg = message.reply_text(
+            message.reply_text(
                 text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
             )
 
     else:
-        delmsg = message.reply_text(
+        message.reply_text(
             text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
         )
-
-    rep.delete()
-
-
-    cleartime = get_clearcmd(chat.id, "info")
-    
-    if cleartime:
-        context.dispatcher.run_async(delete, delmsg, cleartime.time)
-
 
 def about_me(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
