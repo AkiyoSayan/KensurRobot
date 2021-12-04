@@ -364,22 +364,22 @@ def twrp(update: Update, context: CallbackContext):
         context.dispatcher.run_async(delete, delmsg, cleartime.time)
 
 
-__help__ = """
-*Available commands:*\n
-*Magisk:* 
-• `/magisk`, `/su`, `/root`: fetches latest magisk\n
-*OrangeFox Recovery Project:* 
-• `/orangefox` `<devicecodename>`: fetches lastest OrangeFox Recovery available for a given device codename\n
-*TWRP:* 
-• `/twrp <devicecodename>`: fetches lastest TWRP available for a given device codename\n
-*MIUI:*
-• `/miui <devicecodename>`- fetches latest firmware info for a given device codename\n
-*Phh:* 
-• `/phh`: get lastest phh builds from github\n
-*Samsung:*
-• `/checkfw <model> <csc>` - Samsung only - shows the latest firmware info for the given device, taken from samsung servers
-• `/getfw <model> <csc>` - Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device
-"""
+#__help__ = """
+#*Available commands:*\n
+#*Magisk:* 
+#• `/magisk`, `/su`, `/root`: fetches latest magisk\n
+#*OrangeFox Recovery Project:* 
+#• `/orangefox` `<devicecodename>`: fetches lastest OrangeFox Recovery available for a given device codename\n
+#*TWRP:* 
+#• `/twrp <devicecodename>`: fetches lastest TWRP available for a given device codename\n
+#*MIUI:*
+#• `/miui <devicecodename>`- fetches latest firmware info for a given device codename\n
+#*Phh:* 
+#• `/phh`: get lastest phh builds from github\n
+#*Samsung:*
+#• `/checkfw <model> <csc>` - Samsung only - shows the latest firmware info for the given device, taken from samsung servers
+#• `/getfw <model> <csc>` - Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device
+#"""
 
 MAGISK_HANDLER = CommandHandler(["magisk", "root", "su"], magisk, run_async=True)
 ORANGEFOX_HANDLER = CommandHandler("orangefox", orangefox, run_async=True)
@@ -400,6 +400,6 @@ dispatcher.add_handler(CHECKFW_HANDLER)
 dispatcher.add_handler(PHH_HANDLER)
 dispatcher.add_handler(MIUI_HANDLER)
 
-__mod_name__ = "Android"
+#__mod_name__ = "Android"
 __command_list__ = ["magisk", "root", "su", "orangefox", "twrp", "shrp", "checkfw", "getfw", "phh", "miui"]
 __handlers__ = [MAGISK_HANDLER, ORANGEFOX_HANDLER, TWRP_HANDLER, SHRP_HANDLER, GETFW_HANDLER, CHECKFW_HANDLER, PHH_HANDLER, MIUI_HANDLER]
