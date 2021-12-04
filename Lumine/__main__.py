@@ -291,8 +291,8 @@ def error_callback(update: Update, context: CallbackContext):
 
 def StartBack(update: Update, context: CallbackContext):
     query = update.callback_query
-    if query.data == 'start_back':
-        try:
+    try:
+        if query.data == 'start_back':
             query.message.edit_text(
                 text=PM_START_TEXT.format(
                     escape_markdown(first_name), escape_markdown(context.bot.first_name)
@@ -333,9 +333,10 @@ def StartBack(update: Update, context: CallbackContext):
                     ]
                 ),
             )
+        context.bot.answer_callback_query(query.id)
 
-        except BadRequest:
-            pass
+    except BadRequest:
+        pass
 
 def help_button(update: Update, context: CallbackContext):
     query = update.callback_query
