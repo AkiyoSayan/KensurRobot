@@ -25,7 +25,7 @@ from Lumine import (
 )
 from Lumine.__main__ import STATS, GDPR, TOKEN, USER_INFO
 import Lumine.modules.sql.userinfo_sql as sql
-import Lumine.modules.sql.user_sql as sqldb
+import Lumine.modules.sql.users_sql as sqldb
 from Lumine.modules.disable import DisableAbleCommandHandler
 from Lumine.modules.sql.global_bans_sql import is_user_gbanned
 from Lumine.modules.sql.afk_sql import is_afk, check_afk_status
