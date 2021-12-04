@@ -161,7 +161,7 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text("<code>Appraising...</code>", parse_mode=ParseMode.HTML)
 
     text = (
-        f"<b>User info:</b>\n"
+        f"<b>General>:</b>\n"
         f"ID: <code>{user.id}</code>\n"
         f"First Name: {html.escape(user.first_name)}"
     )
@@ -206,19 +206,19 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nUser level: <b>god</b>"
+        text += "\n\nThis person is my <b>Owner</b>"
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nUser level: <b>developer</b>"
+        text += "\n\nThis person is my <b>Developer</b>"
         disaster_level_present = True
     elif user.id in SUDO_USERS:
-        text += "\n\nUser level: <b>sudo</b>"
+        text += "\n\nThis person have power of <b>Sudo</b>"
         disaster_level_present = True
     elif user.id in SUPPORT_USERS:
-        text += "\n\nUser level: <b>support</b>"
+        text += "\n\nThis person is my <b>Support User</b>"
         disaster_level_present = True
     elif user.id in WHITELIST_USERS:
-        text += "\n\nUser level: <b>whitelist</b>"
+        text += "\n\nThis person is <b>Whitelist User</b>"
         disaster_level_present = True
 
     # if disaster_level_present:
