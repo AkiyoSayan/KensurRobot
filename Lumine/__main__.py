@@ -289,6 +289,53 @@ def error_callback(update: Update, context: CallbackContext):
         print(error)
         # handle all other telegram related errors
 
+def StartBack(update: Update, context: CallbackContext):
+    query = update.callback_query
+    if query.data == 'start_back':
+        try:
+            query.message.edit_text(
+                text=PM_START_TEXT.format(
+                    escape_markdown(first_name), escape_markdown(context.bot.first_name)
+                ),
+                parse_mode=ParseMode.MARKDOWN,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="Add Me",
+                                url="t.me/{}?startgroup=true",
+                            ),
+                            InlineKeyboardButton(
+                                text="Updates",
+                                url="t.me/OnePunchUpdates"
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="Support",
+                                url="t.me/KensurCommunity"
+                            ),
+                            InlineKeyboardButton(
+                                text="Help",
+                                callback_data="help_back",
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="Try Inline",
+                                switch_inline_query_current_chat="",
+                            ),
+                             InlineKeyboardButton(
+                                text="Change Log",
+                                url="t.me/kek",                     
+                            )
+                        ],
+                    ]
+                ),
+            )
+
+        except BadRequest:
+            pass
 
 def help_button(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -628,6 +675,8 @@ def main():
     help_handler = CommandHandler("help", get_help, run_async=True)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*", run_async=True)
 
+    start_callback_handler = CallbackQueryHandler(StartBack, pattern=r"start_back*", run_async=True)
+
     settings_handler = CommandHandler("settings", get_settings, run_async=True)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_", run_async=True)
 
@@ -639,6 +688,7 @@ def main():
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(settings_handler)
     dispatcher.add_handler(help_callback_handler)
+    dispatcher.add_handler(start_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(donate_handler)
