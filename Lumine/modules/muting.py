@@ -242,12 +242,12 @@ def temp_mute(update: Update, context: CallbackContext) -> str:
     return ""
 
 
-__help__ = """
-*Admins only:*
- • `/mute <userhandle> <reason>(optional)`*:* silences a user. Can also be used as a reply, muting the replied to user.
- • `/tmute <userhandle> x(m/h/d) <reason>(optional)`*:* mutes a user for x time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
- • `/unmute <userhandle>`*:* unmutes a user. Can also be used as a reply, muting the replied to user.
-"""
+#__help__ = """
+#*Admins only:*
+# • `/mute <userhandle> <reason>(optional)`*:* silences a user. Can also be used as a reply, muting the replied to user.
+# • `/tmute <userhandle> x(m/h/d) <reason>(optional)`*:* mutes a user for x time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+# • `/unmute <userhandle>`*:* unmutes a user. Can also be used as a reply, muting the replied to user.
+#"""
 
 MUTE_HANDLER = CommandHandler("mute", mute, run_async=True)
 UNMUTE_HANDLER = CommandHandler("unmute", unmute, run_async=True)
@@ -257,5 +257,5 @@ dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
 dispatcher.add_handler(TEMPMUTE_HANDLER)
 
-__mod_name__ = "Muting"
+#__mod_name__ = "Muting"
 __handlers__ = [MUTE_HANDLER, UNMUTE_HANDLER, TEMPMUTE_HANDLER]
