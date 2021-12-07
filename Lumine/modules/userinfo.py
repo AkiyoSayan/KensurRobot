@@ -29,6 +29,7 @@ from Lumine import (
     sw,
     StartTime,
 )
+from Lumine.modules.sql import SESSION
 from Lumine.__main__ import STATS, GDPR, TOKEN, USER_INFO
 import Lumine.modules.sql.userinfo_sql as sql
 import Lumine.modules.sql.users_sql as sqldb
