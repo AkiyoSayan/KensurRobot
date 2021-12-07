@@ -207,7 +207,7 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
         text += '\nThis person is my owner'
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += '\nThis Person is a part of Eagle Union'
+        text += '\nThis Person is a part of Kensur Community'
         disaster_level_present = True
     elif user.id in SUDO_USERS:
         text += '\nThe Nation level of this person is Royal'
@@ -423,6 +423,8 @@ def __user_info__(user_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
     result = ""
+    if bio and me:
+        result += f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
     if me:
         result += f"<b>About user:</b>\n{me}\n"
     if bio:
