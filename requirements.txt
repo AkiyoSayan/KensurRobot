@@ -9,6 +9,7 @@ psycopg2-binary
 feedparser
 pynewtonmath
 spongemock
+gitpython
 zalgo-text
 geopy
 nltk
