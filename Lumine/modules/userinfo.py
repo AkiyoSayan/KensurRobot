@@ -332,7 +332,7 @@ def set_about_me(update: Update, context: CallbackContext):
 
 @sudo_plus
 def stats(update, context):
-    db_size = SESSION.execute("SELECT pg_size_pretty(pg_database_size(current_database()))").scalar_one_or_none()
+ #   db_size = SESSION.execute("SELECT pg_size_pretty(pg_database_size(current_database()))").scalar_one_or_none()
     uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
     botuptime = get_readable_time((time.time() - StartTime))
     status = "*╒═══「 System statistics: 」*\n\n"
@@ -352,7 +352,7 @@ def stats(update, context):
     status += "*• Python version:* " + python_version() + "\n"
     status += "*• python-telegram-bot:* " + str(ptbver) + "\n"
     status += "*• Uptime:* " + str(botuptime) + "\n"
-    status += "*• Database size:* " + str(db_size) + "\n"
+ #   status += "*• Database size:* " + str(db_size) + "\n"
     kb = [
           [
            InlineKeyboardButton('Ping', callback_data='pingCB')
