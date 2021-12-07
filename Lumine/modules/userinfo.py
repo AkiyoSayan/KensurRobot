@@ -2,6 +2,10 @@ import html
 import re
 import os
 import requests
+import datetime
+import platform 
+from platform import python_version
+from psutil import cpu_percent, virtual_memory, disk_usage, boot_time
 
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
@@ -11,6 +15,7 @@ from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update, MessageEntity
 from telegram.ext import CallbackContext, CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest
+
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from Lumine import (
@@ -22,6 +27,7 @@ from Lumine import (
     INFOPIC,
     dispatcher,
     sw,
+    StartTime,
 )
 from Lumine.__main__ import STATS, GDPR, TOKEN, USER_INFO
 import Lumine.modules.sql.userinfo_sql as sql
@@ -30,6 +36,7 @@ from Lumine.modules.disable import DisableAbleCommandHandler
 from Lumine.modules.sql.global_bans_sql import is_user_gbanned
 from Lumine.modules.sql.afk_sql import is_afk, check_afk_status
 from Lumine.modules.sql.users_sql import get_user_num_chats
+from telegram import __version__ as ptbver, InlineKeyboardMarkup, InlineKeyboardButton
 from Lumine.modules.sql.clear_cmd_sql import get_clearcmd
 from Lumine.modules.helper_funcs.chat_status import sudo_plus
 from Lumine.modules.helper_funcs.extraction import extract_user
@@ -323,11 +330,59 @@ def set_about_me(update: Update, context: CallbackContext):
 
 
 @sudo_plus
-def stats(update: Update, context: CallbackContext):
-    stats = "<b>📊 Current stats:</b>\n" + "\n".join([mod.__stats__() for mod in STATS])
-    result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
-    update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
+def stats(update, context):
+    db_size = SESSION.execute("SELECT pg_size_pretty(pg_database_size(current_database()))").scalar_one_or_none()
+    uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+    botuptime = get_readable_time((time.time() - StartTime))
+    status = "*╒═══「 System statistics: 」*\n\n"
+    status += "*• System Start time:* " + str(uptime) + "\n"
+    uname = platform.uname()
+    status += "*• System:* " + str(uname.system) + "\n"
+    status += "*• Node name:* " + escape_markdown(str(uname.node)) + "\n"
+    status += "*• Release:* " + escape_markdown(str(uname.release)) + "\n"
+    status += "*• Machine:* " + escape_markdown(str(uname.machine)) + "\n"
 
+    mem = virtual_memory()
+    cpu = cpu_percent()
+    disk = disk_usage("/")
+    status += "*• CPU:* " + str(cpu) + " %\n"
+    status += "*• RAM:* " + str(mem[2]) + " %\n"
+    status += "*• Storage:* " + str(disk[3]) + " %\n\n"
+    status += "*• Python version:* " + python_version() + "\n"
+    status += "*• python-telegram-bot:* " + str(ptbver) + "\n"
+    status += "*• Uptime:* " + str(botuptime) + "\n"
+    status += "*• Database size:* " + str(db_size) + "\n"
+    kb = [
+          [
+           InlineKeyboardButton('Ping', callback_data='pingCB')
+          ]
+    ]
+    repo = git.Repo(search_parent_directories=True)
+    sha = repo.head.object.hexsha
+    status += f"*• Commit*: `{sha[0:9]}`\n"
+    try:
+        update.effective_message.reply_text(status +
+            "\n*Bot statistics*:\n"
+            + "\n".join([mod.__stats__() for mod in STATS]) +
+ #          baka UwU
+            "╘══「 by [Aruoto](github.com/Aruooto) 」\n",
+        parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(kb), disable_web_page_preview=True)
+    except BaseException:
+        update.effective_message.reply_text(
+            (
+                (
+                    (
+                        "\n*Bot statistics*:\n"
+                        + "\n".join(mod.__stats__() for mod in STATS)
+                    )
+               #     Baka UwU
+                )
+                + "╘══「 by [Aruoto](github.com/Aruoto) 」\n"
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+            reply_markup=InlineKeyboardMarkup(kb),
+            disable_web_page_preview=True,
+        )
 
 def about_bio(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
