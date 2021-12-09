@@ -234,10 +234,13 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
 
     text += "\n"
     for mod in USER_INFO:
+        if mod.__mod_name__ == "Info & AFK":
+            continue
+
         try:
-            mod_info = mod.__user_info__(user.id).strip()
+            mod_info = mod.__user_info__(user.id)
         except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id).strip()
+            mod_info = mod.__user_info__(user.id, chat.id)
         if mod_info:
             text += "\n" + mod_info
 
