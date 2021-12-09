@@ -483,15 +483,14 @@ def gdpr(update: Update, context: CallbackContext):
 def __user_info__(user_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
-    result = ""
     if bio and me:
-        result += f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
-    if me:
-        result += f"<b>About user:</b>\n{me}\n"
-    if bio:
-        result += f"<b>What others say:</b>\n{bio}\n"
-    result = result.strip("\n")
-    return result
+        return f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
+    elif me:
+        return f"<b>About user:</b>\n{me}\n"
+    elif bio:
+        return f"<b>What others say:</b>\n{bio}\n"
+    else:
+        return "\n"
 
 
 def __gdpr__(user_id):
