@@ -508,7 +508,7 @@ def unpin(update: Update, context: CallbackContext) -> str:
 
 
 @bot_admin
-@user_admin(AdminPerms.CAN_INVITE_MEMBERS)
+@user_admin(AdminPerms.CAN_INVITE_USERS)
 @connection_status
 def invite(update: Update, context: CallbackContext):
     bot = context.bot
