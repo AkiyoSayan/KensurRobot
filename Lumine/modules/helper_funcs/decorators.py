@@ -1,7 +1,7 @@
 from Lumine.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 from telegram.ext import CommandHandler, MessageHandler, CallbackQueryHandler, InlineQueryHandler
 from telegram.ext.filters import BaseFilter
-from Lumine import dispatcher as d, log
+from Lumine import dispatcher as d, LOGGER as log
 from typing import Optional, Union, List
 
 
