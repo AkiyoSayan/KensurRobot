@@ -16,6 +16,8 @@ from Lumine.modules.helper_funcs.chat_status import (
     ADMIN_CACHE,
 )
 
+from Lumine.modulea.helper_funcs.anonymous import user_admin
+
 from Lumine.modules.helper_funcs.telethn.admin_rights import (
     user_can_pin,
     user_can_promote,
