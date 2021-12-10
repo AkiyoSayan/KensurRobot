@@ -12,7 +12,7 @@ from Lumine.modules.helper_funcs.chat_status import (
     can_pin,
     can_promote,
     connection_status,
-    user_admin,
+    user_admin as u_admin,
     ADMIN_CACHE,
 )
 
@@ -33,7 +33,7 @@ from Lumine.modules.helper_funcs.alternate import typing_action
 @connection_status
 @bot_admin
 @can_promote
-@user_admin
+@user_admin(AdminPerms.CAN_PROMOTE_MEMBERS)
 @loggable
 def promote(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -115,7 +115,7 @@ def promote(update: Update, context: CallbackContext) -> str:
 @connection_status
 @bot_admin
 @can_promote
-@user_admin
+@user_admin(AdminPerms.CAN_PROMOTE_MEMBERS)
 @loggable
 def demote(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -194,7 +194,7 @@ def demote(update: Update, context: CallbackContext) -> str:
         return
 
 
-@user_admin
+@u_admin
 def refresh_admin(update, _):
     try:
         ADMIN_CACHE.pop(update.effective_chat.id)
@@ -207,7 +207,7 @@ def refresh_admin(update, _):
 @connection_status
 @bot_admin
 @can_promote
-@user_admin
+@user_admin(AdminPerms.CAN_PROMOTE_MEMBERS)
 def set_title(update: Update, context: CallbackContext):
     bot = context.bot
     args = context.args
@@ -269,7 +269,7 @@ def set_title(update: Update, context: CallbackContext):
 
 
 @bot_admin
-@user_admin
+@u_admin
 @typing_action
 def setchatpic(update, context):
     chat = update.effective_chat
@@ -306,7 +306,7 @@ def setchatpic(update, context):
 
 
 @bot_admin
-@user_admin
+@u_admin
 @typing_action
 def rmchatpic(update, context):
     chat = update.effective_chat
@@ -325,7 +325,7 @@ def rmchatpic(update, context):
 
 
 @bot_admin
-@user_admin
+@u_admin
 @typing_action
 def setchat_title(update, context):
     chat = update.effective_chat
@@ -354,7 +354,7 @@ def setchat_title(update, context):
 
 
 @bot_admin
-@user_admin
+@u_admin
 @typing_action
 def set_sticker(update, context):
     msg = update.effective_message
@@ -386,7 +386,7 @@ def set_sticker(update, context):
 
 
 @bot_admin
-@user_admin
+@u_admin
 @typing_action
 def set_desc(update, context):
     msg = update.effective_message
@@ -421,7 +421,7 @@ def __chat_settings__(chat_id, user_id):
 
 @bot_admin
 @can_pin
-@user_admin
+@user_admin(AdminPerms.CAN_PIN_MESSAGES)
 @loggable
 def pin(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -472,7 +472,7 @@ def pin(update: Update, context: CallbackContext) -> str:
 
 @bot_admin
 @can_pin
-@user_admin
+@user_admin(AdminPerms.CAN_PIN_MESSAGES)
 @loggable
 def unpin(update: Update, context: CallbackContext) -> str:
     bot = context.bot
@@ -506,7 +506,7 @@ def unpin(update: Update, context: CallbackContext) -> str:
 
 
 @bot_admin
-@user_admin
+@user_admin(AdminPerms.CAN_INVITE_MEMBERS)
 @connection_status
 def invite(update: Update, context: CallbackContext):
     bot = context.bot
