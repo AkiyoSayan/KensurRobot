@@ -52,7 +52,7 @@ def ban(update: Update, context: CallbackContext) -> str:
         },
                               )
         if r:
-            message.reply_text("Channel {} was banned successfully from {}".format(
+            message.reply_text("Channel <b>{}</b> was banned successfully from <b>{} !</b>".format(
                 html.escape(message.reply_to_message.sender_chat.title),
                 html.escape(chat.title)
             ),
