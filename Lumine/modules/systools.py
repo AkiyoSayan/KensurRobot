@@ -152,34 +152,49 @@ def stats(update: Update, context: CallbackContext):
     chat = update.effective_chat
     query = update.callback_query
  
-    msg = "──「 *System Statistics* 」──\n\n"
+    msg = "╒═══「 *System statistics:* 」\n\n"
     uname = platform.uname()
-    msg += f"OS: `{uname.system}`\n"
-    msg += f"Version: `{uname.version}`\n"
-    msg += f"Release: `{uname.release}`\n"
-    msg += f"Processor: `{uname.processor}`\n"
+    msg += f"*• OS:* `{uname.system}`\n"
+    msg += f"*• Version:* `{uname.version}`\n"
+    msg += f"*• Release:* `{uname.release}`\n"
+    msg += f"*• Processor:* `{uname.processor}`\n"
     boot_time_timestamp = psutil.boot_time()
     bt = datetime.fromtimestamp(boot_time_timestamp)
-    msg += f"Boot time: `{bt.day}/{bt.month}/{bt.year} - {bt.hour}:{bt.minute}:{bt.second}`\n"
-    msg += f"CPU usage: `{psutil.cpu_percent()}%`\n"
+    msg += f"*• Boot time:* `{bt.day}/{bt.month}/{bt.year} - {bt.hour}:{bt.minute}:{bt.second}`\n"
+    msg += f"*• CPU usage:* `{psutil.cpu_percent()}%`\n"
     ram = psutil.virtual_memory()
-    msg += f"RAM: `{get_size(ram.total)} - {get_size(ram.used)} used ({ram.percent}%)`\n"
+    msg += f"*• RAM:* `{get_size(ram.total)} - {get_size(ram.used)} used ({ram.percent}%)`\n"
     disk = psutil.disk_usage('/')
-    msg += f"Disk usage: `{get_size(disk.total)} total - {get_size(disk.used)} used ({disk.percent}%)`\n"
+    msg += f"*• Disk usage:* `{get_size(disk.total)} total - {get_size(disk.used)} used ({disk.percent}%)`\n"
     swap = psutil.swap_memory()
-    msg += f"SWAP: `{get_size(swap.total)} - {get_size(swap.used)} used ({swap.percent}%)`\n\n"
-    msg += f"*Python*: `{python_version()}`\n"
-    msg += f"*Python-Telegram-Bot*: `{pybot.__version__}`\n"
-    msg += f"*GitHub API*: `{str(git.vercheck())}`\n"
+    msg += f"*• SWAP:* `{get_size(swap.total)} - {get_size(swap.used)} used ({swap.percent}%)`\n\n"
+    msg += f"*• Python*: `{python_version()}`\n"
+    msg += f"*• Python-Telegram-Bot*: `{pybot.__version__}`\n"
+    msg += f"*• GitHub API*: `{str(git.vercheck())}`\n"
     uptime = get_readable_time((time.time() - StartTime))
     msg += f"*Uptime*: `{uptime}`\n\n"
-    msg += "──「 *Bot Statistics* 」──\n"
+    msg += "*Bot Statistics*\n"
     msg += "\n".join([mod.__stats__() for mod in STATS]) + "\n"
+    msg += "╘══「 by [Aruoto](https://github.com/aruoto) 」"
     
     message.reply_text(
         text = msg,
         parse_mode = ParseMode.MARKDOWN,
         disable_web_page_preview = True,
+        reply_markup = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Support",
+                        url="t.me/KensurCommunity",
+                    ),
+                    InlineKeyboardButton(
+                        text="Updates",
+                        url="t.me/OnePunchUpdates"
+                    ),
+                ],
+            ] 
+        ),     
     )
 
 
