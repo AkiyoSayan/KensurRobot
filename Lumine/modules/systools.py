@@ -19,6 +19,8 @@ from telegram.ext import CommandHandler, CallbackContext, CallbackQueryHandler, 
 from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest, Unauthorized
 
+from Lumine.__main__ import STATS
+
 from Lumine import DEV_USERS, LOGGER, StartTime, dispatcher
 from Lumine.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 from Lumine.modules.helper_funcs.misc import delete
@@ -30,7 +32,7 @@ def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
     time_list = []
-    time_suffix_list = ["s", "m", "h", "days"]
+    time_suffix_list = ["seconds", "minutes", "hours", "days"]
 
     while count < 4:
         count += 1
@@ -49,7 +51,7 @@ def get_readable_time(seconds: int) -> str:
         ping_time += time_list.pop() + ", "
 
     time_list.reverse()
-    ping_time += ":".join(time_list)
+    ping_time += ", ".join(time_list)
 
     return ping_time
 
@@ -150,7 +152,7 @@ def status(update: Update, context: CallbackContext):
     chat = update.effective_chat
     query = update.callback_query
  
-    msg = "──「 *System Statistics* 」──"
+    msg = "──「 *System Statistics* 」──\n\n"
     uname = platform.uname()
     msg += f"OS: `{uname.system}`\n"
     msg += f"Version: `{uname.version}`\n"
@@ -171,8 +173,9 @@ def status(update: Update, context: CallbackContext):
     msg += f"*GitHub API*: `{str(git.vercheck())}`\n"
     uptime = get_readable_time((time.time() - StartTime))
     msg += f"*Uptime*: `{uptime}`\n\n"
+    msg += "──「 *Bot Statistics* 」──\n"
+    msg += "\n".join([mod.__stats__() for mod in STATS]) + "\n"
     
-
     message.reply_text(
         text = msg,
         parse_mode = ParseMode.MARKDOWN,
@@ -204,9 +207,8 @@ def ping(update: Update, context: CallbackContext):
 
 
     delmsg = msg.edit_text(
-        "*PONG!!*\n"
-        f"Time Taken: `{telegram_ping}`\n"
-        f"Service uptime: `{uptime}`",
+        "*Pong!!*\n"
+        f"`{uptime}`",
         parse_mode=ParseMode.MARKDOWN,
     )
 
