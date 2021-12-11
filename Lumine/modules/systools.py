@@ -144,6 +144,41 @@ def status(update: Update, context: CallbackContext):
         disable_web_page_preview = True,
     )
 
+@sudo_plus
+def status(update: Update, context: CallbackContext):
+    message = update.effective_message
+    chat = update.effective_chat
+    query = update.callback_query
+ 
+    msg = "──「 *System Statistics* 」──"
+    uname = platform.uname()
+    msg += f"OS: `{uname.system}`\n"
+    msg += f"Version: `{uname.version}`\n"
+    msg += f"Release: `{uname.release}`\n"
+    msg += f"Processor: `{uname.processor}`\n"
+    boot_time_timestamp = psutil.boot_time()
+    bt = datetime.fromtimestamp(boot_time_timestamp)
+    msg += f"Boot time: `{bt.day}/{bt.month}/{bt.year} - {bt.hour}:{bt.minute}:{bt.second}`\n"
+    msg += f"CPU usage: `{psutil.cpu_percent()}%`\n"
+    ram = psutil.virtual_memory()
+    msg += f"RAM: `{get_size(ram.total)} - {get_size(ram.used)} used ({ram.percent}%)`\n"
+    disk = psutil.disk_usage('/')
+    msg += f"Disk usage: `{get_size(disk.total)} total - {get_size(disk.used)} used ({disk.percent}%)`\n"
+    swap = psutil.swap_memory()
+    msg += f"SWAP: `{get_size(swap.total)} - {get_size(swap.used)} used ({swap.percent}%)`\n\n"
+    msg += f"*Python*: `{python_version()}`\n"
+    msg += f"*Python-Telegram-Bot*: `{pybot.__version__}`\n"
+    msg += f"*GitHub API*: `{str(git.vercheck())}`\n"
+    uptime = get_readable_time((time.time() - StartTime))
+    msg += f"*Uptime*: `{uptime}`\n\n"
+    
+
+    message.reply_text(
+        text = msg,
+        parse_mode = ParseMode.MARKDOWN,
+        disable_web_page_preview = True,
+    )
+
 
 @owner_plus
 def get_bot_ip(update: Update, context: CallbackContext):
@@ -239,6 +274,7 @@ SHELL_HANDLER = DisableAbleCommandHandler(["sh"], shell, run_async=True)
 SPEED_TEST_CALLBACKHANDLER = CallbackQueryHandler(speedtestxyz_callback, pattern="speedtest_.*", run_async=True)
 SPEED_TEST_HANDLER = DisableAbleCommandHandler("speedtest", speedtestxyz, run_async=True)
 STATUS_HANDLER = DisableAbleCommandHandler("status", status, run_async=True)
+STATS_HANDLER = DisableAbleCommandHandler("stats", stats, run_async=True)
   
 dispatcher.add_handler(IP_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
@@ -246,4 +282,5 @@ dispatcher.add_handler(SHELL_HANDLER)
 dispatcher.add_handler(SPEED_TEST_CALLBACKHANDLER)
 dispatcher.add_handler(SPEED_TEST_HANDLER)
 dispatcher.add_handler(STATUS_HANDLER)
+dispatcher.add_handler(STATS_HANDLER)
 
