@@ -147,7 +147,7 @@ def status(update: Update, context: CallbackContext):
     )
 
 @sudo_plus
-def status(update: Update, context: CallbackContext):
+def stats(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     query = update.callback_query
