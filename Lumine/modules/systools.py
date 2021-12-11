@@ -276,7 +276,7 @@ SHELL_HANDLER = DisableAbleCommandHandler(["sh"], shell, run_async=True)
 SPEED_TEST_CALLBACKHANDLER = CallbackQueryHandler(speedtestxyz_callback, pattern="speedtest_.*", run_async=True)
 SPEED_TEST_HANDLER = DisableAbleCommandHandler("speedtest", speedtestxyz, run_async=True)
 STATUS_HANDLER = DisableAbleCommandHandler("status", status, run_async=True)
-STATS_HANDLER = DisableAbleCommandHandler("stats", stats, run_async=True)
+STATS_HANDLER = CommandHandler("stats", stats, run_async=True)
   
 dispatcher.add_handler(IP_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
