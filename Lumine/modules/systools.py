@@ -223,7 +223,7 @@ def ping(update: Update, context: CallbackContext):
 
     delmsg = msg.edit_text(
         "*Pong!!*\n"
-        f"`{uptime}`",
+        f"`{telegram_ping}`",
         parse_mode=ParseMode.MARKDOWN,
     )
 
