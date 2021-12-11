@@ -172,7 +172,7 @@ def stats(update: Update, context: CallbackContext):
     msg += f"*• Python-Telegram-Bot*: `{pybot.__version__}`\n"
     msg += f"*• GitHub API*: `{str(git.vercheck())}`\n"
     uptime = get_readable_time((time.time() - StartTime))
-    msg += f"*Uptime*: `{uptime}`\n\n"
+    msg += f"*• Uptime*: `{uptime}`\n\n"
     msg += "*Bot Statistics*\n"
     msg += "\n".join([mod.__stats__() for mod in STATS]) + "\n"
     msg += "╘══「 by [Aruoto](https://github.com/aruoto) 」"
