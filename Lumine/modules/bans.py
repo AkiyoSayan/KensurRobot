@@ -22,19 +22,18 @@ from Lumine.modules.helper_funcs.chat_status import (
     is_user_admin,
     is_user_ban_protected,
     is_user_in_chat,
-    user_admin,
     user_can_ban,
     can_delete,
 )
 from Lumine.modules.helper_funcs.extraction import extract_user_and_text
 from Lumine.modules.helper_funcs.string_handling import extract_time
 from Lumine.modules.log_channel import gloggable, loggable
-
+from Lumine.modules.helper_funcs.anonymous import user_admin, AdminPerms
 
 @connection_status
 @bot_admin
 @can_restrict
-@user_admin
+@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
 @user_can_ban
 @loggable
 def ban(update: Update, context: CallbackContext) -> str:
@@ -157,7 +156,7 @@ def ban(update: Update, context: CallbackContext) -> str:
 @connection_status
 @bot_admin
 @can_restrict
-@user_admin
+@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
 @user_can_ban
 @loggable
 def temp_ban(update: Update, context: CallbackContext) -> str:
@@ -244,7 +243,7 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
 @connection_status
 @bot_admin
 @can_restrict
-@user_admin
+@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
 @user_can_ban
 @loggable
 def punch(update: Update, context: CallbackContext) -> str:
@@ -320,7 +319,7 @@ def punchme(update: Update, context: CallbackContext):
 @connection_status
 @bot_admin
 @can_restrict
-@user_admin
+@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
 @user_can_ban
 @loggable
 def unban(update: Update, context: CallbackContext) -> str:
