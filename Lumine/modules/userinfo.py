@@ -256,7 +256,7 @@ def info(update: Update, context: CallbackContext):
         except TypeError:
             mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
-            text += "\n\n" + mod_info
+            text += "\n" + mod_info
 
     if INFOPIC:
         try:
@@ -441,7 +441,7 @@ def __user_info__(user_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
     if bio and me:
-        return f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
+        return f"\n<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
     elif me:
         return f"<b>About user:</b>\n{me}\n"
     elif bio:
