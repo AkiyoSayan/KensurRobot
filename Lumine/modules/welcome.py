@@ -282,7 +282,7 @@ def new_member(update: Update, context: CallbackContext):
                         parse_mode=ParseMode.HTML,
                     )
                 update.effective_message.reply_text(
-                    "Hello everybody!", reply_to_message_id=reply
+                    "Thanks for adding me! Join @KensurCommunity for Support", reply_to_message_id=reply
                 )
                 continue
 
