@@ -183,7 +183,7 @@ def info(update: Update, context: CallbackContext):
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
 
-    text += f"\nPermalink: {mention_html(user.id, 'link')}"
+    text += f"\nPermanant user link: {mention_html(user.id, 'link')}"
 
     if chat.type != "private" and user_id != bot.id:
         _stext = "\nPresence: <code>{}</code>"
@@ -205,8 +205,8 @@ def info(update: Update, context: CallbackContext):
 
     try:
         spamwtc = sw.get_ban(int(user.id))
+        text += "\n\n<b>SpamWatch:</b>"
         if spamwtc:
-            text += "<b>SpamWatch:</b>"
             text += "\n\n<b>This person is Spamwatched!</b>"
             text += f"\nReason: <pre>{spamwtc.reason}</pre>"
             text += "\nAppeal at @SpamWatchSupport"
