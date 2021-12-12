@@ -443,7 +443,7 @@ def __user_info__(user_id):
     if bio and me:
         return f"\n\n<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
     elif me:
-        return f"<b>About user:</b>\n{me}\n"
+        return f"\n<b>About user:</b>\n{me}\n"
     elif bio:
         return f"<b>What others say:</b>\n{bio}\n"
     else:
