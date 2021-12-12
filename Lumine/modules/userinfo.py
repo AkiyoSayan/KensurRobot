@@ -136,9 +136,8 @@ def gifid(update: Update, context: CallbackContext):
         update.effective_message.reply_text("Please reply to a gif to get its ID.")
 
 
-def info(update: Update, context: CallbackContext):  # sourcery no-metrics
-    bot = context.bot
-    args = context.args
+def info(update: Update, context: CallbackContext):
+    bot, args = context.bot, context.args
     message = update.effective_message
     chat = update.effective_chat
     user_id = extract_user(update.effective_message, args)
@@ -184,34 +183,39 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
 
-    text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
+    text += f"\nPermalink: {mention_html(user.id, 'link')}"
+
+    if chat.type != "private" and user_id != bot.id:
+        _stext = "\nPresence: <code>{}</code>"
+
+        afk_st = is_afk(user.id)
+        if afk_st:
+            text += _stext.format("AFK")
+        else:
+            status = status = bot.get_chat_member(chat.id, user.id).status
+            if status:
+                if status == "left":
+                    text += _stext.format("Not here")
+                if status == "kicked":
+                    text += _stext.format("Banned")
+                elif status == "member":
+                    text += _stext.format("Detected")
+                elif status in {"administrator", "creator"}:
+                    text += _stext.format("Admin")
 
     try:
         spamwtc = sw.get_ban(int(user.id))
         if spamwtc:
-            text += "<b>\n\nSpamWatch:\n</b>"
-            text += "<b>This person is banned in Spamwatch!</b>"
+            text += "<b>SpamWatch:</b>"
+            text += "\n\n<b>This person is Spamwatched!</b>"
             text += f"\nReason: <pre>{spamwtc.reason}</pre>"
             text += "\nAppeal at @SpamWatchSupport"
         else:
-            text += "<b>\n\nSpamWatch:</b>\n Not banned"
+            text += "\nNot Banned"
     except:
         pass  # don't crash if api is down somehow...
 
     disaster_level_present = False
-
-    num_chats = sqldb.get_user_num_chats(user.id)
-    text += f"\n<b>Chat count</b>: <code>{num_chats}</code>"
-
-    try:
-        user_member = chat.get_member(user.id)
-        if user_member.status == "administrator":
-            result = bot.get_chat_member(chat.id, user.id)
-            if result.custom_title:
-                text += f"\nThis user holds the title <b>{result.custom_title}</b> here."
-    except BadRequest:
-        pass
-
 
     if user.id == OWNER_ID:
         text += '\nThis person is my owner'
@@ -229,18 +233,28 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
         text += '\nThe Nation level of this person is Neptunia'
         disaster_level_present = True
 
-    if disaster_level_present:
-        text += ' [<a href="https://t.me/{}?start=nations">?</a>]'.format(bot.username)
+    # if disaster_level_present:
+    #     text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
+    #         bot.username)
 
-    text += "\n"
+    try:
+        user_member = chat.get_member(user.id)
+        if user_member.status == "administrator":
+            result = requests.post(
+                f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}"
+            )
+            result = result.json()["result"]
+            if "custom_title" in result.keys():
+                custom_title = result["custom_title"]
+                text += f"\n\nTitle:\n<b>{custom_title}</b>"
+    except BadRequest:
+        pass
+
     for mod in USER_INFO:
-        if mod.__mod_name__ == "Info & AFK":
-            continue
-
         try:
-            mod_info = mod.__user_info__(user.id)
+            mod_info = mod.__user_info__(user.id).strip()
         except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id)
+            mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n" + mod_info
 
@@ -275,7 +289,6 @@ def info(update: Update, context: CallbackContext):  # sourcery no-metrics
     
     if cleartime:
         context.dispatcher.run_async(delete, delmsg, cleartime.time)
-
 
 def about_me(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
