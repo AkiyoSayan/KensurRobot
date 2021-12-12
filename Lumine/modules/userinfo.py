@@ -447,7 +447,7 @@ def __user_info__(user_id):
     elif bio:
         return f"<b>What others say:</b>\n{bio}\n"
     else:
-        return "\n"
+        return "\n\n"
 
 
 def __gdpr__(user_id):
