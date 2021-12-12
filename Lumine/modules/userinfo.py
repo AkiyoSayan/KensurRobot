@@ -233,9 +233,9 @@ def info(update: Update, context: CallbackContext):
         text += '\nThe Nation level of this person is Neptunia'
         disaster_level_present = True
 
-    # if disaster_level_present:
-    #     text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
-    #         bot.username)
+     if disaster_level_present:
+         text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
+             bot.username)
 
     try:
         user_member = chat.get_member(user.id)
@@ -256,7 +256,7 @@ def info(update: Update, context: CallbackContext):
         except TypeError:
             mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
-            text += "\n" + mod_info
+            text += "\n\n" + mod_info
 
     if INFOPIC:
         try:
