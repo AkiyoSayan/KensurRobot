@@ -271,7 +271,7 @@ def set_title(update: Update, context: CallbackContext):
 
 
 @bot_admin
-@u_admin
+@user_admin(AdminPerms.CAN_CHANGE_INFO)
 @typing_action
 def setchatpic(update, context):
     chat = update.effective_chat
@@ -308,7 +308,7 @@ def setchatpic(update, context):
 
 
 @bot_admin
-@u_admin
+@user_admin(AdminPerms.CAN_CHANGE_INFO)
 @typing_action
 def rmchatpic(update, context):
     chat = update.effective_chat
@@ -327,7 +327,7 @@ def rmchatpic(update, context):
 
 
 @bot_admin
-@u_admin
+@user_admin(AdminPerms.CAN_CHANGE_INFO)
 @typing_action
 def setchat_title(update, context):
     chat = update.effective_chat
@@ -356,7 +356,7 @@ def setchat_title(update, context):
 
 
 @bot_admin
-@u_admin
+@user_admin(AdminPerms.CAN_CHANGE_INFO)
 @typing_action
 def set_sticker(update, context):
     msg = update.effective_message
@@ -388,7 +388,7 @@ def set_sticker(update, context):
 
 
 @bot_admin
-@u_admin
+@user_admin(AdminPerms.CAN_CHANGE_INFO)
 @typing_action
 def set_desc(update, context):
     msg = update.effective_message
