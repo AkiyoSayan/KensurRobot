@@ -59,7 +59,7 @@ def inlinequery(update: Update, _) -> None:
         },
         {
             "title": "About",
-            "description": "Know about Kigyo",
+            "description": "Know about KensurBot",
             "message_text": "Click the button below to get to know about Kensur.",
             "thumb_urL": "https://te.legra.ph/file/c06b3828725fd8b6d4d86.jpg",
             "keyboard": ".about ",
