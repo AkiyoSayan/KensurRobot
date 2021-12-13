@@ -190,7 +190,7 @@ def stats(update: Update, context: CallbackContext):
                     ),
                     InlineKeyboardButton(
                         text="Updates",
-                        url="t.me/OnePunchUpdates"
+                        url="t.me/KensurUpdates"
                     ),
                 ],
             ] 
