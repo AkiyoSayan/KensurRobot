@@ -2,7 +2,7 @@ from time import sleep
 from typing import Dict, List
 
 from Lumine import NO_LOAD
-from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode
+from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup 
 from telegram.error import TelegramError
 
 
@@ -73,6 +73,27 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         pairs += [[EqInlineKeyboardButton("🔙", callback_data="start_back")]]
 
     return pairs
+
+def article(
+    title: str = "",
+    description: str = "",
+    message_text: str = "",
+    thumb_url: str = None,
+    reply_markup: InlineKeyboardMarkup = None,
+    disable_web_page_preview: bool = False,
+) -> InlineQueryResultArticle:
+
+    return InlineQueryResultArticle(
+        id=uuid4(),
+        title=title,
+        description=description,
+        thumb_url=thumb_url,
+        input_message_content=InputTextMessageContent(
+            message_text=message_text,
+            disable_web_page_preview=disable_web_page_preview,
+        ),
+        reply_markup=reply_markup,
+    )
 
 
 def send_to_list(
