@@ -19,6 +19,7 @@ from telegram import Bot, Chat, ChatPermissions, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
+from Lumine.modules.helper_funcs.decorators import kensurcallback
 
 
 def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
@@ -241,6 +242,43 @@ def temp_mute(update: Update, context: CallbackContext) -> str:
 
     return ""
 
+@kensurcallback(pattern="mutecb")
+def muteCB(update: Update, context: CallbackContext):
+    query = update.callback_query
+    chat = update.effective_chat
+    user = update.effective_user
+    splitter = query.data.split("=")
+    query_match = splitter[0]
+    user_id = splitter[1]
+    if not is_user_admin(chat, int(user.id)):
+        context.bot.answer_callback_query(query.id, text = "You're not admin", show_alert=True)
+    
+    else: 
+        member = chat.get_member(int(user_id))
+        if member.status != 'kicked' and member.status != 'left':
+            if (
+                member.can_send_messages
+                and member.can_send_media_messages
+                and member.can_send_other_messages
+                and member.can_add_web_page_previews
+            ):
+                query.message.edit_text("This user already has the right to speak.")
+            else:
+                context.bot.restrict_chat_member(
+                    chat.id,
+                    int(user_id),
+                    permissions=ChatPermissions(
+                        can_send_messages=True,
+                        can_invite_users=True,
+                        can_pin_messages=True,
+                        can_send_polls=True,
+                        can_change_info=True,
+                        can_send_media_messages=True,
+                        can_send_other_messages=True,
+                        can_add_web_page_previews=True,
+                    ),
+                )
+    pass
 
 #__help__ = """
 #*Admins only:*
