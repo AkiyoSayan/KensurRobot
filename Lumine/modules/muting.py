@@ -93,7 +93,12 @@ def mute(update: Update, context: CallbackContext) -> str:
                 InlineKeyboardButton(text="Unmute", callback_data=f"mutecb={user_id}"),
             ]
         ]
-        message.reply_text(chat.id, reply, reply_markup=buttons, parse_mode=ParseMode.HTML)
+        message.reply_text(
+            chat.id,
+            text=reply, 
+            reply_markup=buttons, 
+            parse_mode=ParseMode.HTML
+        )
         return log
 
     else:
