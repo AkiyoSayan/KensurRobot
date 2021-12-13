@@ -225,7 +225,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                             InlineKeyboardButton(
                                 text="Updates",
-                                url="t.me/OnePunchUpdates"
+                                url="t.me/KensurUpdates"
                             ),
                         ],
                         [
@@ -245,7 +245,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                              InlineKeyboardButton(
                                 text="Change Log",
-                                url="t.me/kek",                     
+                                url="t.me/KensurUpdates",                     
                             )
                         ],
                     ]
@@ -308,7 +308,7 @@ def StartBack(update: Update, context: CallbackContext):
                             ),
                             InlineKeyboardButton(
                                 text="Updates",
-                                url="t.me/OnePunchUpdates"
+                                url="t.me/KensurUpdates"
                             ),
                         ],
                         [
@@ -328,7 +328,7 @@ def StartBack(update: Update, context: CallbackContext):
                             ),
                              InlineKeyboardButton(
                                 text="Change Log",
-                                url="t.me/kek",                     
+                                url="t.me/KensurUpdates",                     
                             )
                         ],
                     ]
