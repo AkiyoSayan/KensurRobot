@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from platform import python_version
 from typing import List
+import uuid
 from uuid import uuid4
 
 import requests
