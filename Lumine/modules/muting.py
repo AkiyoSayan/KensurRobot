@@ -97,7 +97,7 @@ def mute(update: Update, context: CallbackContext) -> str:
             chat.id,
             text=reply, 
             reply_markup=buttons, 
-            parse_mode=ParseMode.HTML
+            parse_mode=ParseMode.HTML,
         )
         return log
 
