@@ -88,7 +88,12 @@ def mute(update: Update, context: CallbackContext) -> str:
         )
         if reason:
             reply += f"\n<code> </code><b>•  Reason:</b> {html.escape(reason)}"
-        bot.sendMessage(chat.id, reply, parse_mode=ParseMode.HTML)
+        buttons = [
+            [
+                InlineKeyboardButton(text="Unmute", callback_data=f"mutecb={user_id}"),
+            ]
+        ]
+        bot.reply_text(chat.id, reply, reply_markup=buttons, parse_mode=ParseMode.HTML)
         return log
 
     else:
@@ -278,7 +283,14 @@ def muteCB(update: Update, context: CallbackContext):
                         can_add_web_page_previews=True,
                     ),
                 )
-    pass
+                query.message.edit_text(f'*{member.user.first_name}* can speak again.', parse_mode = ParseMode.MARKDOWN)
+                context.bot.answer_callback_query(query.id, text = 'Unmuted')
+                return (
+                    f"<b>{html.escape(chat.title)}:</b>\n"
+                    f"#UNMUTE\n"
+                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                    f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}"
+                )
 
 #__help__ = """
 #*Admins only:*
