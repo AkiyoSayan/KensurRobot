@@ -15,7 +15,7 @@ from Lumine.modules.helper_funcs.extraction import (
 )
 from Lumine.modules.helper_funcs.string_handling import extract_time
 from Lumine.modules.log_channel import loggable
-from telegram import Bot, Chat, ChatPermissions, ParseMode, Update
+from telegram import Bot, Chat, ChatPermissions, ParseMode, Update, InlineKeyboardButton
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
