@@ -231,7 +231,7 @@ def about(query: str, update: Update, context: CallbackContext) -> None:
                 ),
                 InlineKeyboardButton(
                     text="Channel",
-                    url=f"https://t.me/KigyoUpdates",
+                    url=f"https://t.me/KensurUpdates",
                 ),
                 InlineKeyboardButton(
                     text='Ping',
