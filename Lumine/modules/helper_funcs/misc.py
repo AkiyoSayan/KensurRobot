@@ -1,6 +1,7 @@
 from time import sleep
 from typing import Dict, List
 
+from uuid import uuid4
 from Lumine import NO_LOAD
 from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup 
 from telegram.error import TelegramError
