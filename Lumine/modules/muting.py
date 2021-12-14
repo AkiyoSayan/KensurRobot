@@ -88,11 +88,15 @@ def mute(update: Update, context: CallbackContext) -> str:
         )
         if reason:
             reply += f"\n<code> </code><b>•  Reason:</b> {html.escape(reason)}"
-        buttons = [
+        keyboard = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton(text="Unmute", callback_data=f"mutecb={user_id}"),
+                [
+                    InlineKeyboardButton(
+                        "Unmute", callback_data=f"mutecb={user_id}"
+                    )
+                ]
             ]
-        ]
+        )
         message.reply_text(
             reply, 
             reply_markup=buttons, 
