@@ -99,7 +99,7 @@ def mute(update: Update, context: CallbackContext) -> str:
         )
         message.reply_text(
             reply, 
-            reply_markup=buttons, 
+            reply_markup=keyboard, 
             parse_mode=ParseMode.HTML,
         )
         return log
