@@ -31,6 +31,7 @@ from Lumine.modules.helper_funcs.extraction import (
 from Lumine.modules.log_channel import loggable
 from Lumine.modules.helper_funcs.alternate import send_message
 from Lumine.modules.helper_funcs.alternate import typing_action
+from Lumine.modules.helper_funcs.decorators import kensurcallback
 
 key2 = InlineKeyboardMarkup(
         [
