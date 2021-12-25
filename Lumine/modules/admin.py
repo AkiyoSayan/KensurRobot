@@ -1,6 +1,6 @@
 import html
 
-from telegram import ParseMode, Update
+from telegram import ParseMode, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
@@ -31,6 +31,79 @@ from Lumine.modules.helper_funcs.extraction import (
 from Lumine.modules.log_channel import loggable
 from Lumine.modules.helper_funcs.alternate import send_message
 from Lumine.modules.helper_funcs.alternate import typing_action
+
+key2 = InlineKeyboardMarkup(
+        [
+          [
+           InlineKeyboardButton(
+                 "🔄 Admincache", callback_data=f"cacheCB"
+              )  
+          ]
+        ]
+    )
+@kensurcallback(pattern='cacheCB')
+def cacheCB(update: Update, context: CallbackContext):
+    query = update.callback_query
+    bot = context.bot
+    chat = update.effective_chat
+    user = update.effective_user
+
+    if not is_user_admin(chat, int(user.id)):
+        context.bot.answer_callback_query(query.id, text="You're not admin")
+    else:
+        try:
+            ADMIN_CACHE.pop(update.effective_chat.id)
+        except KeyError:
+            pass
+        context.bot.answer_callback_query(query.id, text = 'Admin cache refreshed')
+
+    
+@kensurcallback(pattern='demoteCB')
+def demoteCB(update: Update, context: CallbackContext):
+    query = update.callback_query
+    chat = update.effective_chat
+    user = update.effective_user
+    bot = context.bot
+    
+    splitter = query.data.split("=")
+    query_match = splitter[0]
+    user_id = splitter[1]
+
+    try:
+        user_member = chat.get_member(user_id)
+    except:
+        return
+
+    if not is_user_admin(chat, int(user.id)):
+        context.bot.answer_callback_query(query.id, text = "Oops! You're not admin", show_alert=True)
+
+    else:
+        try:
+            bot.promoteChatMember(
+                chat.id,
+                user_id,
+                can_change_info=False,
+                can_post_messages=False,
+                can_edit_messages=False,
+                can_delete_messages=False,
+                can_invite_users=False,
+                can_restrict_members=False,
+                can_pin_messages=False,
+                can_promote_members=False,
+            )
+
+            context.bot.answer_callback_query(query.id, text = 'Successfully Demoted')
+            query.message.edit_text(f"Demoted <b>{user_member.user.first_name or user_id}</b> after promoting.", reply_markup=key2, parse_mode=ParseMode.HTML)
+          
+            log_message = (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"#DEMOTED\n"
+                f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                f"<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
+            )
+
+        except BadRequest:
+            return
 
 @connection_status
 @bot_admin
@@ -98,9 +171,23 @@ def promote(update: Update, context: CallbackContext) -> str:
             message.reply_text("An error occured while promoting.")
         return
 
+        keyboard = InlineKeyboardMarkup(
+       [
+          [
+              InlineKeyboardButton(
+                 "⏬ Demote", callback_data=f"demoteCB={user_id}"
+              ),
+              InlineKeyboardButton(
+                 "🔄 Cache", callback_data=f"cacheCB"
+              ),
+          ]
+       ]
+    ) 
+        
     bot.sendMessage(
-        chat.id,
-        f"Sucessfully promoted <b>{user_member.user.first_name or user_id}</b>!",
+        chat.id, 
+        f"♔ <b>{html.escape(chat.title)}</b> Chat Event!\n• A new admin has been appointed!\n• Let's all welcome <b>{user_member.user.first_name or user_id}</b>",
+        reply_markup=keyboard,
         parse_mode=ParseMode.HTML,
     )
 
