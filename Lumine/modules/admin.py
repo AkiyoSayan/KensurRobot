@@ -13,6 +13,7 @@ from Lumine.modules.helper_funcs.chat_status import (
     can_promote,
     connection_status,
     user_admin as u_admin,
+    is_user_admin,
     ADMIN_CACHE,
 )
 
