@@ -186,11 +186,11 @@ def stats(update: Update, context: CallbackContext):
                 [
                     InlineKeyboardButton(
                         text="Support",
-                        url="t.me/KensurCommunity",
+                        url="t.me/TedezaSupportChat",
                     ),
                     InlineKeyboardButton(
                         text="Updates",
-                        url="t.me/KensurUpdates"
+                        url="t.me/Tedeza_News"
                     ),
                 ],
             ] 
