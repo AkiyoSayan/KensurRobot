@@ -73,7 +73,7 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-Hi {}, my name is [KensurBot](https://telegra.ph/file/276715dfa237968eca3ad.jpg)! 
+Hi {}, my name is [TedezaBot](https://telegra.ph/file/276715dfa237968eca3ad.jpg)! 
 I'm a full-fledged Anime Themed group manager bot with some fun and extras ;)
 I specialize in managing anime centric communities!
 """
@@ -221,17 +221,17 @@ def start(update: Update, context: CallbackContext):
                         [
                             InlineKeyboardButton(
                                 text="Add Me",
-                                url="t.me/{}?startgroup=true",
+                                url="t.me/Tedeza_bot?startgroup=true",
                             ),
                             InlineKeyboardButton(
                                 text="Updates",
-                                url="t.me/KensurUpdates"
+                                url="t.me/Tedeza_News"
                             ),
                         ],
                         [
                             InlineKeyboardButton(
                                 text="Support",
-                                url="t.me/KensurCommunity"
+                                url="t.me/tedezasupportchat"
                             ),
                             InlineKeyboardButton(
                                 text="Help",
@@ -245,7 +245,7 @@ def start(update: Update, context: CallbackContext):
                             ),
                              InlineKeyboardButton(
                                 text="Change Log",
-                                url="t.me/KensurUpdates",                     
+                                url="t.me/Tedeza_News",                     
                             )
                         ],
                     ]
@@ -304,17 +304,17 @@ def StartBack(update: Update, context: CallbackContext):
                         [
                             InlineKeyboardButton(
                                 text="Add Me",
-                                url="t.me/{}?startgroup=true",
+                                url="t.me/tedeza_bot?startgroup=true",
                             ),
                             InlineKeyboardButton(
                                 text="Updates",
-                                url="t.me/KensurUpdates"
+                                url="t.me/Tedeza_News"
                             ),
                         ],
                         [
                             InlineKeyboardButton(
                                 text="Support",
-                                url="t.me/KensurCommunity"
+                                url="t.me/Tedezasupportchat"
                             ),
                             InlineKeyboardButton(
                                 text="Help",
@@ -328,7 +328,7 @@ def StartBack(update: Update, context: CallbackContext):
                             ),
                              InlineKeyboardButton(
                                 text="Change Log",
-                                url="t.me/KensurUpdates",                     
+                                url="t.me/Tedeza_News",                     
                             )
                         ],
                     ]
