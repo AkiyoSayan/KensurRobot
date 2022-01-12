@@ -47,28 +47,28 @@ def inlinequery(update: Update, _) -> None:
             "description": "Look up a person/bot/channel/chat on @Intellivoid SpamProtection API",
             "message_text": "Click the button below to look up a person/bot/channel/chat on @Intellivoid SpamProtection API using "
                             "username or telegram id",
-            "thumb_urL": "https://te.legra.ph/file/c06b3828725fd8b6d4d86.jpg",
+            "thumb_urL": "https://te.legra.ph/file/ddb3cebcae3ad95a8e056.jpg",
             "keyboard": ".spb ",
         },
         {
-            "title": "Account info on Kensur",
-            "description": "Look up a Telegram account in Kensur database",
-            "message_text": "Click the button below to look up a person in Kensur database using their Telegram ID",
-            "thumb_urL": "https://te.legra.ph/file/c06b3828725fd8b6d4d86.jpg",
+            "title": "Account info on Tedeza",
+            "description": "Look up a Telegram account in Tedeza database",
+            "message_text": "Click the button below to look up a person in Tedeza database using their Telegram ID",
+            "thumb_urL": "https://te.legra.ph/file/ddb3cebcae3ad95a8e056.jpg",
             "keyboard": ".info ",
         },
         {
             "title": "About",
-            "description": "Know about KensurBot",
-            "message_text": "Click the button below to get to know about Kensur.",
-            "thumb_urL": "https://te.legra.ph/file/c06b3828725fd8b6d4d86.jpg",
+            "description": "Know about Tedeza",
+            "message_text": "Click the button below to get to know about Tedeza.",
+            "thumb_urL": "https://te.legra.ph/file/ddb3cebcae3ad95a8e056.jpg",
             "keyboard": ".about ",
         },
         {
             "title": "Anilist",
             "description": "Search anime and manga on AniList.co",
             "message_text": "Click the button below to search anime and manga on AniList.co",
-            "thumb_urL": "https://te.legra.ph/file/c06b3828725fd8b6d4d86.jpg",
+            "thumb_urL": "https://te.legra.ph/file/ddb3cebcae3ad95a8e056.jpg",
             "keyboard": ".anilist ",
         },
     ]
@@ -185,7 +185,7 @@ def inlineinfo(query: str, update: Update, context: CallbackContext) -> None:
             [
                 InlineKeyboardButton(
                     text="Report Error",
-                    url=f"https://t.me/KensurCommunity",
+                    url=f"https://t.me/tedezasupportchat",
                 ),
                 InlineKeyboardButton(
                     text="Search again",
@@ -216,7 +216,7 @@ def about(query: str, update: Update, context: CallbackContext) -> None:
     user = context.bot.get_chat(user_id)
     sql.update_user(user.id, user.username)
     about_text = f"""
-    KensurBot (@{context.bot.username})
+    Tedeza (@{context.bot.username})
     Maintained by [Aruoto](t.me/AruotoxD)
     Built with ❤️ using python-telegram-bot v{str(__version__)}
     Running on Python {python_version()}
@@ -227,11 +227,11 @@ def about(query: str, update: Update, context: CallbackContext) -> None:
             [
                 InlineKeyboardButton(
                     text="Support",
-                    url=f"https://t.me/KensurCommunity",
+                    url=f"https://t.me/TedezaSupportChat",
                 ),
                 InlineKeyboardButton(
                     text="Channel",
-                    url=f"https://t.me/KensurUpdates",
+                    url=f"https://t.me/Tedeza_News",
                 ),
                 InlineKeyboardButton(
                     text='Ping',
@@ -313,7 +313,7 @@ def spb(query: str, update: Update, context: CallbackContext) -> None:
             [
                 InlineKeyboardButton(
                     text="Report Error",
-                    url=f"https://t.me/kensurcommunity",
+                    url=f"https://t.me/TedezaSupportChat",
                 ),
                 InlineKeyboardButton(
                     text="Search again",
@@ -457,7 +457,7 @@ def media_query(query: str, update: Update, context: CallbackContext) -> None:
                 [
                     InlineKeyboardButton(
                         text="Report error",
-                        url="t.me/kensurcommunity",
+                        url="t.me/TedezaSupportChat",
                     ),
                     InlineKeyboardButton(
                         text="Search again",
