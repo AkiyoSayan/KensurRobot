@@ -148,7 +148,7 @@ def inlineinfo(query: str, update: Update, context: CallbackContext) -> None:
         text += f"\n\nThis person is my owner"
         nation_level_present = True
     elif user.id in DEV_USERS:
-        text += f"\n\nThis Person is a part of Kensur Community"
+        text += f"\n\nThis Person is a part of Tedezas Clan Club"
         nation_level_present = True
     elif user.id in SUDO_USERS:
         text += f"\n\nThe Nation level of this person is Royal"
