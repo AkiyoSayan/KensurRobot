@@ -221,7 +221,7 @@ def info(update: Update, context: CallbackContext):
         text += '\nThis person is my owner'
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += '\nThis Person is a part of Kensur Community'
+        text += '\nThis Person is a part of Tedezas Chan Club'
         disaster_level_present = True
     elif user.id in SUDO_USERS:
         text += '\nThe Nation level of this person is Royal'
