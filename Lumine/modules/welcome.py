@@ -261,7 +261,7 @@ def new_member(update: Update, context: CallbackContext):
             # Welcome yourself
             elif new_mem.id == bot.id:
                 update.effective_message.reply_text(
-                    "Thanks for adding me! Join @KensurCommunity for Support", reply_to_message_id=reply
+                    "Thanks for adding me! Join @Tedeza_Support_Chat for Support", reply_to_message_id=reply
                 )
                 continue
 
